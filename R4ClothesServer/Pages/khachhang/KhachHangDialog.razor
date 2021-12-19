@@ -1,0 +1,64 @@
+﻿@page "/khachhangdialog/{id}"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject NavigationManager navigation
+@inject ISnackbar Snackbar
+@inject R4ClothesServer.Helpers.IUploadImage _uploadImage
+
+<h3>@Tieude</h3>
+<EditForm Model="@khachHang" OnValidSubmit="@SubmitForm">
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Value="@khachHang.Makhachhang" Label="Mã khách hàng" Disabled="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@khachHang.Tenkhachhang" Label="Tên khách hàng" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@khachHang.Email" Label="Email" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@khachHang.Diachi" Label="Địa chỉ" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker Label="Ngày Sinh" Editable="true" @bind-Date="@khachHang.Ngaysinh" Placeholder="Select Date" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect T="int" Label="Giới Tính" @bind-Value="@khachHang.Gioitinh">
+                <MudSelectItem Value="@(0)">Nam</MudSelectItem>
+                <MudSelectItem Value="@(1)">Nữ</MudSelectItem>
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@khachHang.Sodienthoai" Label="Số điện thoại" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Checked="@khachHang.Trangthai" Color="Color.Secondary">Trạng Thái</MudSwitch>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <InputFile id="fileInput" OnChange="UploadFiles" hidden />
+            <MudButton HtmlTag="label"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Filled.CloudUpload"
+                       for="fileInput">
+                Upload Files
+            </MudButton>
+            @if (khachHang.Hinh != null)
+            {               
+                <div class="form-group">
+                    <img src="@url" style="height:150px" />
+                </div>
+            }
+        </MudItem>
+    </MudGrid>
+    <div class="mt-3 ml-0 d-flex">
+        <div class="d-flex ml-auto align-center">
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Class="m-2" ButtonType="ButtonType.Submit">Save</MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Primary" Class="m-2" OnClick="@Cancel">Hủy</MudButton>
+        </div>
+    </div>
+</EditForm>
+@code{
+}

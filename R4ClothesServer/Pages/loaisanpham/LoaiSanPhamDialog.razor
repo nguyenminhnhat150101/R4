@@ -1,0 +1,26 @@
+﻿@page "/LoaiSanPhamDialog/{id}"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject NavigationManager navigation
+@inject ISnackbar Snackbar
+
+<h3>@Tieude</h3>
+<EditForm Model="@loaiSanPham" OnValidSubmit="@SubmitForm">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Value="@loaiSanPham.Maloai" Label="Mã loại" Disabled="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@loaiSanPham.Tenloai" Label="Tên loại" />
+            <ValidationMessage For="@(()  => loaiSanPham.Tenloai)" />
+        </MudItem>
+    </MudGrid>
+    <div class="mt-3 ml-0 d-flex">
+        <div class="d-flex ml-auto align-center">
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit" Color="Color.Info" Class="m-2">Save</MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Primary" Class="m-2" Link="/LoaiSanPhamList">Hủy</MudButton>
+        </div>
+    </div>
+</EditForm>

@@ -1,0 +1,45 @@
+﻿@page "/quantrilist"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@*@using Examples.Data.Models*@
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject ISnackbar Snackbar
+@using R4ClothesServer.Models
+
+<MudTable Items="@quanTris" Hover="true" Filter="new Func<QuanTri,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Danh Sách Quản Trị</MudText>
+        <MudSpacer />
+        <div class="flex-grow-1"></div>
+        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="@MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Mã Quản Trị</MudTh>
+        <MudTh>Họ Tên</MudTh>
+        <MudTh>Tài Khoản</MudTh>
+        @*<MudTh>Mật Khẩu</MudTh>*@
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Maloai">@context.Maquantri</MudTd>
+        <MudTd DataLabel="Tenloai">@context.Hoten</MudTd>
+        <MudTd DataLabel="Tenloai">@context.Taikhoan</MudTd>
+        @*<MudTd DataLabel="Tenloai">@context.Matkhau</MudTd>*@
+        <MudTd>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Info" Size="@MudBlazor.Size.Small" Class="m-2"><a href="/QuanTriDialog/@context.Maquantri">Edit</a></MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="m-2" Link="/QuanTriList">Delete</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+<div class="d-flex flex-wrap mt-4">
+    <div style="min-width:200px;">
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CreateNewFolder" Color="Color.Success" Class="m-2"><a href="/QuanTriDialog/0">Create</a></MudButton>
+    </div>
+</div>
+
+@code {
+
+}

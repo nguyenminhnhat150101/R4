@@ -1,0 +1,53 @@
+﻿@page "/Hoadondetail/{id}"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@using R4ClothesServer.Models.ViewModels
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject NavigationManager navigation
+@inject ISnackbar Snackbar
+
+<MudText Typo="Typo.h6">Chi Tiết Hóa Đơn </MudText>
+<div class="flex-grow-1"></div>
+<EditForm Model="@hoaDon">
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">Mã hóa đơn : @hoaDon.Mahoadon</dt>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Tên khách hàng : @hoaDon.Makhachhang</dt>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Tên người quản trị : @hoaDon.Nguoiquantri</dt>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Ngày đặt : @hoaDon.Ngaydat</dt>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Tổng tiền : @hoaDon.Tongtien VNĐ</dt>
+        </dl>
+        <dl class="row">
+            <dt class="col-sm-2">Trạng Thái : @hoaDon.Trangthai</dt>
+        </dl>
+    </div>
+</EditForm>
+<MudTable Items="@sanPhamCTs" Hover="true">
+    <HeaderContent>
+        <MudTh>Tên Sản Phẩm </MudTh>
+        <MudTh>Hình</MudTh>
+        <MudTh>Số Lượng </MudTh>
+        <MudTh> Giá</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Maloai">@context.TenSanPham</MudTd>
+        <MudTd DataLabel="Hinh"><img src="https://res.cloudinary.com/r4clothes/image/upload/@context.Hinh" style="width:100px" /></MudTd>
+        <MudTd DataLabel="Tenloai">@context.SoLuongMua</MudTd>
+        <MudTd DataLabel="Tenloai">@context.Gia</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+@code {
+
+}

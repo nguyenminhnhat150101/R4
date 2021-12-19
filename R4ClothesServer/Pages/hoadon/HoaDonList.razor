@@ -1,0 +1,58 @@
+﻿@page "/hoadonlist"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@using R4ClothesServer.Models
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject ISnackbar Snackbar
+
+
+<MudTable Items="@HoaDons" Hover="true" Filter="new Func<HoaDon,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Danh Sách Loại Sản Phẩm</MudText>
+        <MudSpacer />
+        <div class="flex-grow-1"></div>
+        @*<MudItem xs="12" sm="6" md="4">
+            <MudSelect Label="Trạng thái hóa đơn" Variant="Variant.Text" @bind-Value="@tt" OffsetY="true">
+                @foreach (TrangthaiHD trangthai in Enum.GetValues(typeof(TrangthaiHD)))
+                {
+                    <MudSelectItem Value="@((int)trangthai)">@trangthai</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" @onclick="@hoadontheott">Tìm</MudButton>
+        </MudItem>*@
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="@MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+        </MudItem>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Mã Hóa Đơn</MudTh>
+        <MudTh>Mã Khách Hàng</MudTh>
+        <MudTh>Mã Quản Trị</MudTh>
+        <MudTh>Ngày Đặt</MudTh>
+        <MudTh>Tổng Tiền</MudTh>
+        <MudTh>Trạng Thái</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Maloai">@context.Mahoadon</MudTd>
+        <MudTd DataLabel="Tenloai">@context.Makhachhang</MudTd>
+        <MudTd DataLabel="Tenloai">@context.Nguoiquantri</MudTd>
+        <MudTd DataLabel="Tenloai">@context.Ngaydat</MudTd>
+        <MudTd DataLabel="Tenloai">@context.Tongtien</MudTd>
+        <MudTd DataLabel="Tenloai">@context.Trangthai</MudTd>
+        <MudTd>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Info" Size="@MudBlazor.Size.Small" Class="m-2"><a href="/HoaDonDialog/@context.Mahoadon">Edit</a></MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Details" Color="Color.Info" Size="@MudBlazor.Size.Small" Class="m-2"><a href="/HoaDonDetail/@context.Mahoadon">Detail</a></MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="m-2" Link="/LoaiSanPhamList">Delete</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+@code {
+
+}

@@ -1,0 +1,76 @@
+﻿@page "/sanphamlist"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject ISnackbar Snackbar
+@using R4ClothesServer.Models
+
+<MudTable Items="@sanPhams" Hover="true" Filter="new Func<SanPham,bool>(FilterFunc1)">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Danh Sách Sản Phẩm</MudText>
+        <MudSpacer />
+        <div class="flex-grow-1"></div>
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="@MudBlazor.Size.Medium" Class="mt-0 ml-3"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>IDSP</MudTh>
+        <MudTh>IDQT</MudTh>
+        <MudTh>Tên</MudTh>
+        <MudTh>Loại</MudTh>
+        <MudTh>SL</MudTh>
+        <MudTh>Giá</MudTh>
+        <MudTh>Hình</MudTh>
+        <MudTh>Ngày nhập</MudTh>
+        <MudTh>Giảm giá</MudTh>
+        <MudTh>Mô tả</MudTh>
+        <MudTh>Trạng thái</MudTh>
+        <MudTh>Đặc biệt</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Masanpham">@context.Masanpham</MudTd>
+        <MudTd DataLabel="Maquantri">@context.Maquantri</MudTd>
+        <MudTd DataLabel="Tensanpham">@context.Tensanpham</MudTd>
+        <MudTd DataLabel="Maloai">@context.Maloai</MudTd>
+        <MudTd DataLabel="Soluong">@context.Soluong</MudTd>
+        <MudTd DataLabel="Gia">@context.Gia</MudTd>
+        @*<MudTd DataLabel="Hinh">@context.Hinh</MudTd>*@
+        <MudTd DataLabel="Hinh"><img src="https://res.cloudinary.com/r4clothes/image/upload/@context.Hinh" style="width:100px" /></MudTd>
+        <MudTd DataLabel="Ngaynhap">@context.Ngaynhap</MudTd>
+        <MudTd DataLabel="Giamgia">@context.Giamgia</MudTd>
+        <MudTd DataLabel="Mota">@context.Mota</MudTd>      
+        @if (@context.Trangthai == true)
+        {
+            <MudTd DataLabel="Trangthai"><MudPaper Class="text-light bg-success">@context.Trangthai</MudPaper></MudTd>
+        }
+        else
+        {
+            <MudTd DataLabel="Trangthai"><MudPaper Class="text-light bg-danger">@context.Trangthai</MudPaper></MudTd>
+        }
+        @if (@context.Dacbiet == true)
+        {
+            <MudTd DataLabel="Dacbiet"><MudPaper Class="text-light bg-success">@context.Dacbiet</MudPaper></MudTd>
+        }
+        else
+        {
+            <MudTd DataLabel="Dacbiet"><MudPaper Class="text-light bg-danger">@context.Dacbiet</MudPaper></MudTd>
+        }
+        <MudTd>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Info" Size="@MudBlazor.Size.Small" Class="m-2"><a href="/SanPhamDialog/@context.Masanpham">Edit</a></MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="m-2" Link="/SanPhamList">Delete</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+
+<div class="d-flex flex-wrap mt-4">
+    <div style="min-width:200px;">
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CreateNewFolder" Color="Color.Success" Class="m-2"><a href="/SanPhamDialog/0">Create</a></MudButton>
+    </div>
+</div>
+@code {
+    
+
+}

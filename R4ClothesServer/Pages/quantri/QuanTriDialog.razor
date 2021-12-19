@@ -1,0 +1,44 @@
+﻿@page "/QuanTriDialog/{id}"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject NavigationManager navigation
+@inject ISnackbar Snackbar
+
+<h3>@Tieude</h3>
+<EditForm Model="@quantri" OnValidSubmit="@SubmitForm">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@quantri.Maquantri" Label="Mã quản trị" Disabled="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@quantri.Hoten" Label="Họ tên" />
+            <ValidationMessage For="@(()  => quantri.Hoten)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@quantri.Taikhoan" Label="Tài Khoản" />
+            <ValidationMessage For="@(()  => quantri.Taikhoan)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudHidden Invert="@flag">
+                <MudTextField @bind-Value="@quantri.Matkhau" Label="Mật khẩu" @ref="pwField1" InputType="InputType.Password" />
+                <ValidationMessage For="@(()  => quantri.Matkhau)" />
+            </MudHidden>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudHidden Invert="@flag">
+                <MudTextField T="string" Label="Nhập lại mật khẩu" InputType="InputType.Password"
+                              Validation="@(new Func<string, string>(PasswordMatch))" />
+            </MudHidden>
+        </MudItem>    
+    </MudGrid>
+    <div class="mt-3 ml-0 d-flex">
+        <div class="d-flex ml-auto align-center">
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" ButtonType="ButtonType.Submit" Color="Color.Info" Class="m-2">Save</MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Primary" Class="m-2" Link="/QuanTriList">Hủy</MudButton>
+        </div>
+    </div>
+</EditForm>

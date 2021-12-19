@@ -1,0 +1,79 @@
+﻿@page "/sanphamdialog/{id}"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject NavigationManager navigation
+@inject ISnackbar Snackbar
+@inject R4ClothesServer.Helpers.IUploadImage _uploadImage
+
+<h3>@Tieude</h3>
+<EditForm Model="@sanPham" OnValidSubmit="@SubmitForm">
+    <DataAnnotationsValidator />
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Value="@sanPham.Masanpham" Label="Mã Sản Phẩm" Disabled="true" />
+            <ValidationMessage For="@(()  => sanPham.Masanpham)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Value="@sanPham.Maquantri" Label="Mã Quản Trị" Disabled="true" />
+            <ValidationMessage For="@(()  => sanPham.Maquantri)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect Label="Loại sản phẩm" Variant="Variant.Text" @bind-Value="@sanPham.Maloai" OffsetY="true">
+                @foreach (var loaisanpham in LoaiSanPhams)
+                {
+                    <MudSelectItem Value="@loaisanpham.Maloai">@loaisanpham.Tenloai</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@sanPham.Tensanpham" Label="Tên Sản Phẩm" />
+            <ValidationMessage For="@(()  => sanPham.Tensanpham)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@sanPham.Soluong" Label="Số Lượng" Variant="Variant.Text" Min="0" Max="10" />
+            <ValidationMessage For="@(()  => sanPham.Soluong)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudDatePicker Label="Ngày nhập"  Text="@(sanPham.Ngaynhap.ToString())" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@sanPham.Gia" Label="Giá" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+            <ValidationMessage For="@(()  => sanPham.Gia)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@sanPham.Giamgia" Label="Giảm Giá" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" />
+            <ValidationMessage For="@(()  => sanPham.Giamgia)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@sanPham.Mota" Label="Mô Tả" Variant="Variant.Text" Min="0" Max="10" />
+            <ValidationMessage For="@(()  => sanPham.Mota)" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSwitch @bind-Checked="@sanPham.Dacbiet" Color="Color.Secondary">Đặc Biệt</MudSwitch>
+            <MudSwitch @bind-Checked="@sanPham.Trangthai" Color="Color.Secondary">Trạng Thái</MudSwitch>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <InputFile id="fileInput" OnChange="UploadFiles" hidden />
+            <MudButton HtmlTag="label"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Filled.CloudUpload"
+                       for="fileInput">
+                Upload Files
+            </MudButton>
+            @if (sanPham.Hinh != null)
+            {
+                <div class="form-group">
+                    <img src="@url" style="height:150px" />
+                </div>
+            }
+        </MudItem>
+    </MudGrid>
+    <div class="mt-3 ml-0 d-flex">
+        <div class="d-flex ml-auto align-center">
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Class="m-2" ButtonType="ButtonType.Submit">Save</MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Primary" Class="m-2" @onclick="@Cancel">Hủy</MudButton>
+        </div>
+    </div>
+</EditForm>

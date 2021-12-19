@@ -1,0 +1,31 @@
+﻿@page "/loaisanphamlist"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@using R4ClothesServer.Models
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject ISnackbar Snackbar
+
+<MudTable Items="@LoaiSanPhams" Hover="true" Filter="new Func<LoaiSanPham,bool>(FilterFunc1)">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Danh Sách Loại Sản Phẩm</MudText>
+        <MudSpacer />
+        <div class="flex-grow-1"></div>
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="@MudBlazor.Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>Mã Loại</MudTh>
+        <MudTh>Tên Loại</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Maloai">@context.Maloai</MudTd>
+        <MudTd DataLabel="Tenloai">@context.Tenloai</MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+<div class="d-flex flex-wrap mt-4">
+    <div style="min-width:200px;">
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CreateNewFolder" Color="Color.Success" Class="m-2"><a href="/LoaiSanPhamDialog/0">Create</a></MudButton>
+    </div>
+</div>

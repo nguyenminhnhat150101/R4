@@ -1,0 +1,63 @@
+﻿@page "/khachhanglist"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@using R4ClothesServer.Models
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject ISnackbar Snackbar
+
+<MudTable Items="@khachHangs" Hover="true" Filter="new Func<KhachHang,bool>(FilterFunc1)">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Danh Sách Khách Hàng</MudText>
+        <MudSpacer />
+        <div class="flex-grow-1"></div>
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="@MudBlazor.Size.Medium" Class="mt-0 ml-3"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh>IDKH</MudTh>
+        <MudTh>Tên</MudTh>
+        <MudTh>Email</MudTh>
+        <MudTh>Địa chỉ</MudTh>
+        <MudTh>Ngày sinh</MudTh>
+        <MudTh>Giới tính</MudTh>
+        <MudTh>SĐT</MudTh>
+        <MudTh>Hình</MudTh>
+        <MudTh>Trạng Thái</MudTh>
+        <MudTh></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Makhachhang">@context.Makhachhang</MudTd>
+        <MudTd DataLabel="Tenkhachhang">@context.Tenkhachhang</MudTd>
+        <MudTd DataLabel="Email">@context.Email</MudTd>
+        <MudTd DataLabel="Diachi">@context.Diachi</MudTd>
+        <MudTd DataLabel="Ngaysinh">@context.Ngaysinh</MudTd>
+        @if (context.Gioitinh == 0)
+        {
+            <MudTd DataLabel="Gioitinh">Nam</MudTd>
+        }
+        else
+        {
+            <MudTd DataLabel="Gioitinh">Nữ</MudTd>
+        }
+        <MudTd DataLabel="Sodienthoai">@context.Sodienthoai</MudTd>
+        @*<MudTd DataLabel="Hinh">@context.Hinh</MudTd>*@
+        <MudTd DataLabel="Hinh"><img src="https://res.cloudinary.com/r4clothes/image/upload/@context.Hinh" style="width:100px" /></MudTd>
+        <MudTd DataLabel="Trangthai">@context.Trangthai</MudTd>
+        <MudTd>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Edit" Color="Color.Info" Size="@MudBlazor.Size.Small" Class="m-2">
+                <a href="/KhachHangDialog/@context.Makhachhang">Edit</a>
+            </MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" Class="m-2" Link="/KhahcHangList">Delete</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
+<div class="d-flex flex-wrap mt-4">
+    <div style="min-width:200px;">
+        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.CreateNewFolder" Color="Color.Success" Class="m-2"><a href="/KhachHangDialog/0">Create</a></MudButton>
+    </div>
+</div>
+@code {
+
+}

@@ -1,0 +1,47 @@
+﻿@page "/HoaDonDialog/{id}"
+﻿@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@using R4ClothesServer.Models
+@inject NavigationManager navigation
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject ILocalStorageService _localStorageService
+@inject ISnackbar Snackbar
+
+
+<h3>@Tieude</h3>
+<EditForm Model="@hoaDon" OnValidSubmit="@SubmitForm">
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Value="@hoaDon.Mahoadon" Label="Mã hóa đơn" Disabled="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Value="@hoaDon.Makhachhang" Label="Mã hóa đơn" Disabled="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField Value="@hoaDon.Nguoiquantri" Label="Mã hóa đơn" Disabled="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@hoaDon.Ngaydat" Format="yyyy/MM/dd" Label="Ngày tạo hóa đơn" Disabled="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudTextField @bind-Value="@hoaDon.Tongtien" Label="Giá" Variant="Variant.Text" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.AttachMoney" Disabled="true" />
+        </MudItem>
+        <MudItem xs="12" sm="6" md="4">
+            <MudSelect Label="Trạng thái" Variant="Variant.Text" @bind-Value="@hoaDon.Trangthai" OffsetY="true">
+                @foreach (TrangthaiHD trangthai in Enum.GetValues(typeof(TrangthaiHD)))
+                {
+                    <MudSelectItem Value="@trangthai">@trangthai</MudSelectItem>
+                }
+            </MudSelect>
+        </MudItem>
+    </MudGrid>
+    <div class="mt-3 ml-0 d-flex">
+        <div class="d-flex ml-auto align-center">
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Class="m-2" ButtonType="ButtonType.Submit">Save</MudButton>
+            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Primary" Class="m-2" Link="/LoaiSanPhamList">Hủy</MudButton>
+        </div>
+    </div>
+</EditForm>
+@code{
+
+}

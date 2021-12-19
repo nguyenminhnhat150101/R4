@@ -1,0 +1,82 @@
+﻿@page "/loginQT"
+@using System.Web;
+@using System.ComponentModel.DataAnnotations;
+@using R4ClothesServer.Models.ViewModels;
+@using R4ClothesServer.Models;
+@using Newtonsoft.Json;
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject ILocalStorageService _localStorageService
+@layout LoginLayout;
+@inject NavigationManager NavigationManager
+@attribute [AllowAnonymous]
+<div class="col-md-4 offset-md-3 mt-5">
+    <div class="card">
+        <h4 class="card-header">Đăng nhập</h4>
+        <div class="card-body">
+            <div class="form-group">
+                <input type="text" id="username" placeholder="User Name" @bind="@username" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Password" @bind="@password" @onkeypress="Enter" class="form-control" />
+            </div>
+            <button class="ml-md-auto btn btn-primary" @onclick="@CheckLogin">
+                Login
+            </button>
+            @if (!string.IsNullOrEmpty(error))
+            {
+                <div class="alert alert-danger mt-3 mb-0">@((MarkupString)error)</div>
+            }
+        </div>
+    </div>
+</div>
+
+@code{
+    //private bool loading;
+    private string error;
+
+    string username = "";
+    string password = "";
+
+    private string Encode(string param)
+    {
+        return HttpUtility.UrlEncode(param);
+    }
+
+    public void Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            if (password != "")
+            {
+                CheckLogin();
+            }
+        }
+    }
+
+    private async Task CheckLogin()
+    {
+        error = "";
+        if (username == "")
+        {
+            error = "- Bạn cần nhập username.";
+        }
+        if (password == "")
+        {
+            error += (error == "" ? "" : "<br/>") + " - Bạn cần nhập password.";
+        }
+        if (error == "")
+        {
+            var loginQT = new Login() { User = username, Password = password };
+            TokenModel tokenModel = new TokenModel();
+            string res = await _apiHelper.PostRequestAsync("tokens", loginQT, null);
+            if (res != "-1")
+            {
+                tokenModel = JsonConvert.DeserializeObject<TokenModel>(res);
+                await _localStorageService.SetItemAsync("token", tokenModel.Token);
+                await _localStorageService.SetItemAsync("quantriid", tokenModel.khachhangId);
+                NavigationManager.NavigateTo("CheckLogin?paramUsername=" + @Encode(@username)
+                + "&paramPassword=" + @Encode(@password), true);
+            }
+        }
+    }
+}

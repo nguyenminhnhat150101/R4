@@ -1,0 +1,83 @@
+﻿@page "/thongke"
+@using System.Net.Http.Json
+@using MudBlazor.Extensions
+@inject R4ClothesServer.Helpers.IAPIHelper _apiHelper
+@inject ISnackbar Snackbar
+
+<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary">
+    <MudTabPanel Text="Doanh Thu">
+        <MudGrid>
+            <MudItem xs="12" sm="6" md="4">
+                @*<MudDatePicker Label="Từ ngày" @bind-Date="@tu" HelperText="" DateFormat="yyyy-MM-dd" />*@
+                <MudDatePicker Label="Từ ngày" @bind-value="@tu" DateFormat="yyyy-MM-dd"/>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4">
+                @*<MudDatePicker Label="Đến ngày" @bind-Date="@den" HelperText="" DateFormat="yyyy-MM-dd" />*@
+                <MudDatePicker Label="Đến ngày" @bind-value="@den" DateFormat="yyyy-MM-dd" />
+            </MudItem>
+        </MudGrid>
+        <MudItem xs="12" sm="6" md="4">
+            <MudButton Variant="Variant.Outlined" Color="Color.Primary" @onclick="@tim">Tìm</MudButton>
+        </MudItem>
+        <MudTable Items="@DoanhThus">
+            <HeaderContent>
+                <MudTh>Mã Hóa Đơn</MudTh>
+                <MudTh>Mã Khách Hàng</MudTh>
+                <MudTh>Ngày Đặt</MudTh>
+                <MudTh>Trạng Thái</MudTh>
+                <MudTh>Tổng Tiền</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Mahoadon">@context.Mahoadon</MudTd>
+                <MudTd DataLabel="Makhachhang">@context.Makhachhang </MudTd>
+                <MudTd DataLabel="Ngaydat">@context.Ngaydat</MudTd>
+                <MudTd DataLabel="Trangthai">@context.Trangthai</MudTd>
+                <MudTd DataLabel="Tongtien">@context.Tongtien</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudTabPanel>
+    <MudTabPanel Text="Khách Hàng Thân Thiết">
+        <MudTable Items="@KhachHangs">
+            <HeaderContent>
+                <MudTh>Tên Khách Hàng</MudTh>
+                <MudTh>Email Khách Hàng</MudTh>
+                <MudTh>Số Điện Thoại</MudTh>
+                <MudTh>Số Hóa Đơn</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Tenkhachhang">@context.TenKhachHang</MudTd>
+                <MudTd DataLabel="Emailkhachhang">@context.EmailKhachHang</MudTd>
+                <MudTd DataLabel="SDT">@context.SDT</MudTd>
+                <MudTd DataLabel="Sohoadon">@context.SoHoaDon</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudTabPanel>
+    <MudTabPanel Text="Sản Phẩm bán được">
+        <MudTable Items="@BanDuoc">
+            <HeaderContent>
+                <MudTh>Tên Sản Phẩm</MudTh>
+                <MudTh>Loại Sản Phẩm</MudTh>
+                <MudTh>Giá</MudTh>
+                <MudTh>Số Lượng</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Tensanpham">@context.Tensanpham</MudTd>
+                <MudTd DataLabel="Tenloai">@context.LoaiSanPhams.Tenloai</MudTd>
+                <MudTd DataLabel="Gia">@context.Gia</MudTd>
+                <MudTd DataLabel="Soluong">@context.Soluong</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudTabPanel>
+</MudTabs>
+@code {
+
+}
