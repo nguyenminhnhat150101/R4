@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,11 @@ namespace R4ClothesServer.Helpers
     public class APIHelper : IAPIHelper
     {
         public IConfiguration _config;
-
-        public APIHelper(IConfiguration config)
+        public ILocalStorageService _localStorage;
+        
+        public APIHelper(IConfiguration config, ILocalStorageService localStorageService)
         {
+            _localStorage = localStorageService;
             _config = config;
         }
 
@@ -27,11 +30,12 @@ namespace R4ClothesServer.Helpers
             // Pass the handler to httpclient(from you are calling api)
             //HttpClient client = new HttpClient(clientHandler);
             var urlapi = _config.GetSection("API")["APIUrl"].ToString();
+            var token2 = await _localStorage.GetItemAsync<string>("token");
             using (var client = new HttpClient(clientHandler))
             {
                 try
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token2);
                     HttpResponseMessage res = await client.GetAsync(urlapi + url);
                     if (res.IsSuccessStatusCode)
                     {
@@ -53,6 +57,7 @@ namespace R4ClothesServer.Helpers
         public async Task<string> PostRequestAsync(string url, object postData, string token)
         {
             var urlapi = _config.GetSection("API")["APIUrl"].ToString();
+            var token2 = await _localStorage.GetItemAsync<string>("token");
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
@@ -62,7 +67,7 @@ namespace R4ClothesServer.Helpers
             {
                 try
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token2);
                     StringContent content = new StringContent(JsonConvert.SerializeObject(postData), Encoding.UTF8, "application/json");
                     HttpResponseMessage res = await client.PostAsync(urlapi + url, content);
                     if (res.IsSuccessStatusCode)
@@ -85,6 +90,7 @@ namespace R4ClothesServer.Helpers
         public async Task<string> PuttRequestAsync(string url, object postData, string token)
         {
             var urlapi = _config.GetSection("API")["APIUrl"].ToString();
+            var token2 = await _localStorage.GetItemAsync<string>("token");
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
@@ -94,7 +100,7 @@ namespace R4ClothesServer.Helpers
             {
                 try
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token2);
                     StringContent content = new StringContent(JsonConvert.SerializeObject(postData), Encoding.UTF8, "application/json");
                     HttpResponseMessage res = await client.PutAsync(urlapi + url, content);
                     if (res.IsSuccessStatusCode)
