@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components;
+using Newtonsoft.Json;
 using R4ClothesServer.Models;
 using System;
 using System.Collections.Generic;
@@ -10,11 +12,14 @@ namespace R4ClothesServer.Pages.sanpham
 {
     public partial class SanPhamList
     {
+        [Inject] public ILocalStorageService _localStorage { get; set; }
+        protected string token;
         private string searchString = "";
         public IEnumerable<SanPham> sanPhams = new List<SanPham>();
         protected override async Task OnInitializedAsync()
         {
-            var res = await _apiHelper.GetRequestAsync("Sanphams/dssanpham", null);
+            //token = await _localStorage.GetItemAsync<string>("token");
+            var res = await _apiHelper.GetRequestAsync("Sanphams/dssanpham", token);
             if (res != "-1")
             {
                 

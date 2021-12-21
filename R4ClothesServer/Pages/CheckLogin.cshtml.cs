@@ -22,10 +22,8 @@ namespace R4ClothesServer.Pages
     {
         [Inject]
         public IAPIHelper _apiHelper { get; set; }
-        public ILocalStorageService _localStorageService { get; }
-        public CheckLoginModel(ILocalStorageService localStorageService, IAPIHelper apiHelper)
+        public CheckLoginModel(IAPIHelper apiHelper)
         {
-            _localStorageService = localStorageService;
             _apiHelper = apiHelper;
         }
         public async Task<IActionResult> OnGetAsync(string paramUsername, string paramPassword)

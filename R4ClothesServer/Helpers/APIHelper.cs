@@ -57,7 +57,7 @@ namespace R4ClothesServer.Helpers
         public async Task<string> PostRequestAsync(string url, object postData, string token)
         {
             var urlapi = _config.GetSection("API")["APIUrl"].ToString();
-            var token2 = await _localStorage.GetItemAsync<string>("token");
+            //var token2 = await _localStorage.GetItemAsync<string>("token");
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
@@ -67,7 +67,7 @@ namespace R4ClothesServer.Helpers
             {
                 try
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token2);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     StringContent content = new StringContent(JsonConvert.SerializeObject(postData), Encoding.UTF8, "application/json");
                     HttpResponseMessage res = await client.PostAsync(urlapi + url, content);
                     if (res.IsSuccessStatusCode)
@@ -90,7 +90,7 @@ namespace R4ClothesServer.Helpers
         public async Task<string> PuttRequestAsync(string url, object postData, string token)
         {
             var urlapi = _config.GetSection("API")["APIUrl"].ToString();
-            var token2 = await _localStorage.GetItemAsync<string>("token");
+            //var token2 = await _localStorage.GetItemAsync<string>("token");
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 
@@ -100,7 +100,7 @@ namespace R4ClothesServer.Helpers
             {
                 try
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token2);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     StringContent content = new StringContent(JsonConvert.SerializeObject(postData), Encoding.UTF8, "application/json");
                     HttpResponseMessage res = await client.PutAsync(urlapi + url, content);
                     if (res.IsSuccessStatusCode)
