@@ -38,7 +38,7 @@ namespace R4ClothesServer.Pages
             bool flagLogin = false;
             var loginQT = new Login() { User = paramUsername, Password = paramPassword };
             TokenModel tokenModel = new TokenModel();
-            string res = await _apiHelper.PostRequestAsync("tokens", loginQT, null);
+            string res = await _apiHelper.PostRequestAsync("tokens", loginQT, "null");
             if (res != "-1")
             {
                 tokenModel = JsonConvert.DeserializeObject<TokenModel>(res);
