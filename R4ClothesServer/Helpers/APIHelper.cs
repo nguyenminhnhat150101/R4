@@ -99,7 +99,16 @@ namespace R4ClothesServer.Helpers
         public async Task<string> PuttRequestAsync(string url, object postData, string token)
         {
             var urlapi = _config.GetSection("API")["APIUrl"].ToString();
-            var token2 = await _localStorage.GetItemAsync<string>("token");
+            string token2 = null;
+            if (token != "null")
+            {
+                token2 = await _localStorage.GetItemAsync<string>("token");
+
+            }
+            else
+            {
+                token = null;
+            }
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 

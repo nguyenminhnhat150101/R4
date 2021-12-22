@@ -9,7 +9,7 @@
         <MudGrid>
             <MudItem xs="12" sm="6" md="4">
                 @*<MudDatePicker Label="Từ ngày" @bind-Date="@tu" HelperText="" DateFormat="yyyy-MM-dd" />*@
-                <MudDatePicker Label="Từ ngày" @bind-value="@tu" DateFormat="yyyy-MM-dd"/>
+                <MudDatePicker Label="Từ ngày" @bind-value="@tu" DateFormat="yyyy-MM-dd" />
             </MudItem>
             <MudItem xs="12" sm="6" md="4">
                 @*<MudDatePicker Label="Đến ngày" @bind-Date="@den" HelperText="" DateFormat="yyyy-MM-dd" />*@
@@ -38,6 +38,10 @@
                 <MudTablePager />
             </PagerContent>
         </MudTable>
+        <div class="p-2">
+            <h3 hidden="@flag" style="text-align: right;">Tổng doanh thu từ @from đến @to: @dt VNĐ</h3>
+            <h3 hidden="@flag2" style="text-align: right;">Tổng doanh thu từ @tu đến @den: @dt VNĐ</h3>
+        </div>
     </MudTabPanel>
     <MudTabPanel Text="Khách Hàng Thân Thiết">
         <MudTable Items="@KhachHangs">
@@ -79,5 +83,5 @@
     </MudTabPanel>
 </MudTabs>
 @code {
-
+    
 }

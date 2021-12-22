@@ -1,7 +1,21 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<MudText Style="background-color:#0c88b8; text-align:center; color:aliceblue ">Chào Mừng đến với admin</MudText>
+<MudCarousel Class="mt-5" Style="height:500px;" ShowArrows="@arrows" ShowDelimiters="@delimiters" AutoCycle="@autocycle" TData="object">
+    <MudCarouselItem Transition="transition">
+        <div class="d-flex">
+            <img class="w-100" src="../img/as2.png" />
+        </div>
+    </MudCarouselItem>
+    <MudCarouselItem Transition="transition">
+        <div class="d-flex">
+            <img class="w-100" src="../img/da2.jpg" />
+        </div>
+    </MudCarouselItem>
+</MudCarousel>
+@code{
+    private bool arrows = true;
+    private bool delimiters = true;
+    private bool autocycle = true;
+    private Transition transition = Transition.Slide;
+}
